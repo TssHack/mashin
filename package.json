@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
-    "eas-cli": "^3.13.1"  // نسخه فعلی را می‌توانید به‌روزرسانی کنید
+    "eas-cli": "^3.13.1"  
   },
   "private": true
 }
