@@ -17,7 +17,8 @@
     "react-native-responsive-screen": "^1.4.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "eas-cli": "^3.13.1"  // نسخه فعلی را می‌توانید به‌روزرسانی کنید
   },
   "private": true
 }
