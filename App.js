@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
@@ -43,17 +43,27 @@ const App = () => {
   const calculateBMI = () => {
     const weightInKg = parseFloat(weight);
     const heightInM = parseFloat(height) / 100;
-    if (weightInKg > 0 && heightInM > 0) {
-      const bmiValue = (weightInKg / (heightInM * heightInM)).toFixed(2);
-      setBmi(bmiValue);
-    } else {
-      setBmi('Invalid input');
+
+    // بررسی ورودی‌ها برای BMI
+    if (isNaN(weightInKg) || weightInKg <= 0) {
+      setBmi('وزن نامعتبر است');
+      return;
     }
+
+    if (isNaN(heightInM) || heightInM <= 0) {
+      setBmi('قد نامعتبر است');
+      return;
+    }
+
+    const bmiValue = (weightInKg / (heightInM * heightInM)).toFixed(2);
+    setBmi(bmiValue);
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>ماشین حساب پیشرفته</Text>
+      
+      {/* بخش ماشین حساب */}
       <View style={styles.calculator}>
         <View style={styles.display}>
           <TextInput
@@ -83,6 +93,8 @@ const App = () => {
           ))}
         </View>
       </View>
+
+      {/* بخش محاسبه BMI */}
       <View style={styles.bmiCalculator}>
         <Text style={styles.bmiTitle}>محاسبه شاخص توده بدن (BMI)</Text>
         <TextInput
@@ -104,12 +116,15 @@ const App = () => {
         </TouchableOpacity>
         <Text style={styles.bmiResult}>نتیجه BMI: {bmi}</Text>
       </View>
+
+      {/* تاریخچه محاسبات */}
       <View style={styles.history}>
         <Text style={styles.historyTitle}>تاریخچه محاسبات</Text>
         {history.map((item, index) => (
           <Text key={index} style={styles.historyItem}>{item}</Text>
         ))}
       </View>
+
       {/* نمایش نام توسعه‌دهنده */}
       <View style={styles.developerSection}>
         <Icon name="code" size={hp('2.5%')} color="#333" />
@@ -123,38 +138,38 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 20,
-    backgroundColor: '#f4f4f4',
+    backgroundColor: '#e1f5fe',
   },
   title: {
     fontSize: hp('3%'),
     fontWeight: 'bold',
-    color: '#333',
+    color: '#1565c0',
     marginBottom: 20,
   },
   calculator: {
     backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 10,
+    borderRadius: 15,
+    padding: 20,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 5,
   },
   display: {
-    backgroundColor: '#222',
-    borderRadius: 5,
-    padding: 10,
+    backgroundColor: '#1565c0',
+    borderRadius: 10,
+    padding: 15,
     marginBottom: 10,
   },
   input: {
     color: '#fff',
-    fontSize: hp('3%'),
+    fontSize: hp('3.5%'),
     textAlign: 'right',
   },
   result: {
     color: '#fff',
-    fontSize: hp('2.5%'),
+    fontSize: hp('3%'),
     textAlign: 'right',
   },
   buttons: {
@@ -167,24 +182,24 @@ const styles = StyleSheet.create({
     height: hp('10%'),
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ddd',
-    borderRadius: 5,
+    backgroundColor: '#0288d1',
+    borderRadius: 10,
     margin: 5,
   },
   buttonText: {
     fontSize: hp('3%'),
-    color: '#333',
+    color: '#fff',
   },
   bmiCalculator: {
     marginTop: 20,
     backgroundColor: '#fff',
-    borderRadius: 10,
+    borderRadius: 15,
     padding: 20,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 5,
   },
   bmiTitle: {
     fontSize: hp('2.5%'),
@@ -193,14 +208,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   bmiInput: {
-    backgroundColor: '#f4f4f4',
-    borderRadius: 5,
+    backgroundColor: '#e1f5fe',
+    borderRadius: 10,
     padding: 10,
     marginBottom: 10,
   },
   bmiButton: {
-    backgroundColor: '#28a745',
-    borderRadius: 5,
+    backgroundColor: '#1565c0',
+    borderRadius: 10,
     padding: 15,
     alignItems: 'center',
   },
@@ -218,13 +233,13 @@ const styles = StyleSheet.create({
   history: {
     marginTop: 20,
     backgroundColor: '#fff',
-    borderRadius: 10,
+    borderRadius: 15,
     padding: 20,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 5,
   },
   historyTitle: {
     fontSize: hp('2.5%'),
@@ -244,12 +259,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
     padding: 10,
     backgroundColor: '#fff',
-    borderRadius: 10,
+    borderRadius: 15,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 5,
   },
   developerText: {
     fontSize: hp('2%'),
