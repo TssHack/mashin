@@ -24,12 +24,17 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.yourcompany.advancedcalculator",
+      "package": "com.ehsan.advancedcalculator",
       "versionCode": 1,
       "permissions": []
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "bc0f8ef1-5cae-415a-9eb8-5b9fab1db3f7"
+      }
     },
     "description": "A beautiful and advanced calculator with BMI calculation and more!",
     "githubUrl": "https://github.com/yourusername/advanced-calculator"
